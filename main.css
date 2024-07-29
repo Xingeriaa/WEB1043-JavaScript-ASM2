@@ -1,0 +1,45 @@
+body {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    font-size: 16px;
+}
+
+/* HEADER */
+
+header {
+    border: 1px solid;
+
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 10vh;
+}
+
+
+.logo-section {
+    border: 1px solid;
+
+    height: 100%;
+    width: 25%;
+}
+
+.main-section {
+    border: 1px solid;
+
+    width: 50%;
+}
+
+.user-section {
+    border: 1px solid;
+
+    width: 25%;
+}
+
+.logo-section img {
+    /* width: 100%; */
+    height: 50%;
+}
