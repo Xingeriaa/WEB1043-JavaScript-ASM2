@@ -82,6 +82,7 @@ header {
 .banner-container {
     border: 1px solid;
 
+    top: 0;
     position: absolute;
     overflow: hidden;
     width: 100%;
@@ -96,7 +97,7 @@ header {
     height: 100%;
     width: 100%;
     filter: brightness(50%);
-    /* background-image: url(./src/Banner/banner1.webp); */
+    background-image: url(./src/Banner/banner1.webp);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -241,9 +242,55 @@ header {
 
 
 .products-container {
-    border: 1px solid;
+    /* border: 1px solid; */
 
     position: relative;
     width: 100%;
+    height: 50vh;
     top: 215vh;
 }
+
+.products-container h1 {
+    margin-left: 5%;
+}
+
+.products-container p {
+    margin-left: 5%;
+    font-weight: bold;
+}
+
+.products-section {
+    border: 1px solid;
+
+    width: 90%;
+    /* height: 50vh; */
+    margin: 0 auto;
+    /* margin-left: 5%; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 5vh;
+}
+
+.product-frame {
+    border: 1px solid;
+
+    width: 23%;
+}
+
+.product-frame img {
+    width: 100%;
+    cursor: pointer;
+}
+
+.product-frame .name {
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.product-frame .price {
+    color: gray;
+    font-weight: 500;
+    cursor: pointer;
+}
+
