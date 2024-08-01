@@ -12,18 +12,31 @@ body {
     height: 100%;
 }
 
+
 /* HEADER */
 
 header {
-    /* border: 1px solid; */
+    border: 1px solid;
 
     position: absolute;
     display: flex;
     width: 100%;
     height: 10vh;
-    z-index: 2;
+    z-index: 1;
+    /* pointer-events: fill; */
+
+    cursor: default;
 }
 
+.fake-header {
+    border: 1px solid;
+    width: 100%;
+    height: 16.5%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 2;
+}
 
 .logo-section {
     /* border: 1px solid; */
@@ -64,6 +77,11 @@ header {
     text-decoration: none;
     color: white;
     font-weight: bold;
+    transition: .25s ease-in-out;
+}
+
+.main-section a:hover {
+    color: gray;
 }
 
 .main-section a:first-child {
@@ -90,6 +108,15 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    cursor: none;
+}
+
+.banner-container i {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    transform: scale(2.5);
 }
 
 .background-img {
@@ -113,6 +140,10 @@ header {
     margin-top: 10%;
 }
 
+.desc-section div {
+    overflow: hidden;
+}
+
 .desc-section h1 {
     font-size: 4rem;
     font-weight: 100;
@@ -127,6 +158,14 @@ header {
     border-radius: 50px;
     font-size: 1.15rem;
     font-weight: bold;
+    border: 2.5px solid white;
+    cursor: pointer;
+    transition: background-color .25s;
+}
+
+.desc-section input:hover {
+    color: white;
+    background-color: transparent;
 }
 
 .pages-section {
@@ -155,6 +194,20 @@ header {
     cursor: pointer;
     margin-left: 3.5%;
     color: rgb(182, 182, 182);
+    overflow: hidden;
+    text-align: center;
+    transition: ease;
+}
+
+.progress-bar{
+    border: 2.5px solid rgb(190, 190, 190);
+
+    position: absolute;
+    width: 0%;
+    bottom: 0;
+    left: 0;
+
+    transition: 50ms linear;
 }
 
 /* CATEGORIES */
@@ -189,14 +242,21 @@ header {
     /* border: 1px solid; */
     width: 75%;
     cursor: pointer;
+    transition: .6s ease-in-out;
 }
+
+/* .categories-container div img:hover{
+    transform: scale(1.1);
+} */
 
 .categories-container div p {
     position: absolute;
     /* right: 15%; */
     bottom: 15%;
     cursor: pointer;
+    transition: .125s ease-in-out;
 }
+
 
 /* PROVIDER */
 
