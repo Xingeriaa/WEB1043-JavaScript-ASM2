@@ -38,11 +38,11 @@ const BrandsList = {
 }
 
 const BannersList = {
-    1: "./src/Banner/banner1.webp",
-    2: "./src/Banner/banner2.webp",
-    3: "./src/Banner/banner3.webp",
-    4: "./src/Banner/banner4.webp",
-    5: "./src/Banner/banner5.jpg"
+    1: {src: "./src/Banner/banner1.webp", about: "Lót chuột kính cường lực giới hạn", name: "Yuki Aim 2024 Katana & Kitsune", button: "Xem thêm"},
+    2: {src: "./src/Banner/banner2.webp", about: "Lót chuột kính cường lực giới hạn", name: "Yuki Aim 2024 Katana & Kitsune", button: "Xem thêm"},
+    3: {src: "./src/Banner/banner3.webp", about: "Lót chuột kính cường lực giới hạn", name: "Yuki Aim 2024 Katana & Kitsune", button: "Xem thêm"},
+    4: {src: "./src/Banner/banner4.webp", about: "Lót chuột kính cường lực giới hạn", name: "Yuki Aim 2024 Katana & Kitsune", button: "Đặt ngay"},
+    5: {src: "./src/Banner/banner5.jpg", about: "Lót chuột kính cường lực giới hạn", name: "Yuki Aim 2024 Katana & Kitsune", button: "Xem chi tiết"}
 }
 
 function ImagesPreloader(src) {
@@ -70,9 +70,12 @@ function AddBrand(src) {
 }
 
 function BannerSwitcher(src) {
-    let Banner = document.querySelector(".background-img");
-    let duration = 500;
-    let steps = 50; 
+    const Banner = document.querySelector(".background-img");
+    const Title = document.querySelector(".desc-section h1");
+    const Description = document.querySelector(".desc-section h4")
+    const Button = document.querySelector(".desc-section input");
+    let duration = 300;
+    let steps = 60; 
     let interval = duration / steps;
 
     for (let i = steps; i > 0; i--) {
@@ -91,11 +94,6 @@ function BannerSwitcher(src) {
     }, duration);
 }
 
-Object.keys(BannersList).forEach(key => {
-    const value = ProductsList[key];
-    ImagesPreloader(value);
-});
-
 Object.keys(ProductsList).forEach(key => {
     const value = ProductsList[key];
     AddProduct(value.name, value.price, value.src);
@@ -113,5 +111,5 @@ setInterval(() => {
     if (CurrentBanner > 5) {
         CurrentBanner = 1
     }
-    BannerSwitcher(BannersList[CurrentBanner]);
+    BannerSwitcher(BannersList[CurrentBanner].src);
 }, 3000);
