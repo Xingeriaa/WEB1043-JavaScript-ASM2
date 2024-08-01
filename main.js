@@ -10,6 +10,49 @@ const ProductsList = {
     8: {name: "Lót chuột kính cường lực Yuki Aim Katana - Limited Edition", price: "3.190.000₫", src: "./src/Products/lot-chu-t-kinh-c-ng-l-c-yuki-aim-katana-limited-edition-40761371001077.webp"}
 }
 
+const BrandsList = {
+    1: "./src/Brand/Filco.webp",
+    2: "./src/Brand/finalmouse.webp",
+    3: "./src/Brand/fnatic.avif",
+    4: "./src/Brand/lamzu.webp",
+    5: "./src/Brand/yuki-aim.webp",
+
+    6: "./src/Brand/arbiter-300px.webp",
+    7: "./src/Brand/GLSSWRKS-logo-320px_84ef7b9b-4888-4c00-9293-0d7e3d731b37.webp",
+    8: "./src/Brand/vancer-logo-300px.avif",
+    9: "./src/Brand/corepad.webp",
+    10: "./src/Brand/deltahub-logo.webp",
+
+    11: "./src/Brand/lgg-logo.webp",
+    12: "./src/Brand/drunkdeer-logo.avif",
+    13: "./src/Brand/gamesense-logo-v2.avif",
+    14: "./src/Brand/pulsar.avif",
+    15:"./src/Brand/datacolor.avif",
+
+    16: "./src/Brand/Xtrfy-logo-homepage.avif",
+    17: "./src/Brand/pwnagesq_Logo_black-300-v2.webp",
+    18: "./src/Brand/ninjutso.avif",
+    19: "./src/Brand/skypad.webp",
+    20: "./src/Brand/glorious.avif"
+
+}
+
+const BannersList = {
+    1: "./src/Banner/banner1.webp",
+    2: "./src/Banner/banner2.webp",
+    3: "./src/Banner/banner3.webp",
+    4: "./src/Banner/banner4.webp",
+    5: "./src/Banner/banner5.jpg"
+}
+
+function ImagesPreloader(src) {
+    Object.keys(src).forEach(key => {
+        const value = src[key];
+        var Img = new Image();
+        Img.src = src;
+    });
+}
+ 
 function AddProduct(name,price,src) {
     let ProductSeciton = document.querySelector(".products-section");
     let Product = `<div class="product-frame">
@@ -20,7 +63,55 @@ function AddProduct(name,price,src) {
     ProductSeciton.innerHTML += Product;
 }
 
+function AddBrand(src) {
+    let BrandSection = document.querySelector(".brand-section");
+    let Brand = `<div><img src=${src} alt=""></div>`
+    BrandSection.innerHTML += Brand;
+}
+
+function BannerSwitcher(src) {
+    let Banner = document.querySelector(".background-img");
+    let duration = 500;
+    let steps = 50; 
+    let interval = duration / steps;
+
+    for (let i = steps; i > 0; i--) {
+        setTimeout(() => {
+            Banner.style.filter = `brightness(${i}%)`;
+        }, interval * (steps - i));
+    }
+
+    setTimeout(() => {
+        Banner.style.backgroundImage = `url(${src})`;
+        for (let i = 0; i < steps; i++) {
+            setTimeout(() => {
+                Banner.style.filter = `brightness(${i + 1}%)`;
+            }, interval * i);
+        }
+    }, duration);
+}
+
+Object.keys(BannersList).forEach(key => {
+    const value = ProductsList[key];
+    ImagesPreloader(value);
+});
+
 Object.keys(ProductsList).forEach(key => {
     const value = ProductsList[key];
     AddProduct(value.name, value.price, value.src);
 });
+
+Object.keys(BrandsList).forEach(key => {
+    const value = BrandsList[key];
+    AddBrand(value);
+});
+
+var CurrentBanner = 1;
+
+setInterval(() => {
+    CurrentBanner++;
+    if (CurrentBanner > 5) {
+        CurrentBanner = 1
+    }
+    BannerSwitcher(BannersList[CurrentBanner]);
+}, 3000);
