@@ -1,3 +1,10 @@
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+}
+
+document.querySelector("#right").style.top = -100+"px";
+document.querySelector("#left").style.top = -100+"px";
+
 const BANNER_COUNT = 5;
 const INTERVAL_DURATION = 5000;
 
@@ -7,14 +14,14 @@ var BannerAutomation = null;
 var ProgressAutomation = null;
 
 const ProductsList = {
-    1: {name: "Kê tay công thái học DeltaHub Carpio G2.0", price: "1.100.000đ", src: "./src/Products/DeltaHub-Carpio-G2.webp"},
-    2: {name: "Chuột không dây siêu nhẹ Lamzu Atlantis Mini Champion Edition - Hỗ trợ 8KHz", price: "2.750.000₫", src: "./src/Products/Lamzu-Atlantis-Mini-Champion-Light-Pink.webp"},
-    3: {name: "Chuột không dây Razer DeathAdder V3 Hyperspeed", price: "2.390.000₫", src: "./src/Products/chu-t-khong-day-razer-deathadder-v3-hyperspeed.webp"},
-    4: {name: "Chuột không dây Razer Viper V3 Pro - Đi kèm dongle 8KHz", price: "3.935.000₫", src: "./src/Products/chu-t-khong-day-razer-viper-v3-pro.webp"},
-    5: {name: "Lót chuột Lethal Gaming Gear Jupiter PRO (V2)", price: "1.551.000₫", src: "./src/Products/LGG-JUPITERPRO-XL-SQ-Bcopy.webp"},
-    6: {name: "Bàn phím từ Lamzu Atlantis Pro Keyboard - Hỗ trợ Rapid Trigger", price: "4.630.000₫", src: "./src/Products/ban-phim-t-lamzu-atlantis-pro-keyboard-h-tr-rapid-trigger-39938162786549.webp"},
-    7: {name: "Lót chuột kính cường lực Yuki Aim Kitsune - Limited Edition", price: "3.190.000₫", src: "./src/Products/lot-chu-t-kinh-c-ng-l-c-yuki-aim-kitsune-limited-edition-40729345229045.webp"},
-    8: {name: "Lót chuột kính cường lực Yuki Aim Katana - Limited Edition", price: "3.190.000₫", src: "./src/Products/lot-chu-t-kinh-c-ng-l-c-yuki-aim-katana-limited-edition-40761371001077.webp"}
+    1: {name: "Kê tay công thái học DeltaHub Carpio G2.0", price: "1.100.000đ", src: "./src/Products/DeltaHub-Carpio-G2.webp", productID: "001"},
+    2: {name: "Chuột không dây siêu nhẹ Lamzu Atlantis Mini Champion Edition - Hỗ trợ 8KHz", price: "2.750.000₫", src: "./src/Products/Lamzu-Atlantis-Mini-Champion-Light-Pink.webp", productID: "002"},
+    3: {name: "Chuột không dây Razer DeathAdder V3 Hyperspeed", price: "2.390.000₫", src: "./src/Products/chu-t-khong-day-razer-deathadder-v3-hyperspeed.webp", productID: "003"},
+    4: {name: "Chuột không dây Razer Viper V3 Pro - Đi kèm dongle 8KHz", price: "3.935.000₫", src: "./src/Products/chu-t-khong-day-razer-viper-v3-pro.webp", productID: "004"},
+    5: {name: "Lót chuột Lethal Gaming Gear Jupiter PRO (V2)", price: "1.551.000₫", src: "./src/Products/LGG-JUPITERPRO-XL-SQ-Bcopy.webp", productID: "005"},
+    6: {name: "Bàn phím từ Lamzu Atlantis Pro Keyboard - Hỗ trợ Rapid Trigger", price: "4.630.000₫", src: "./src/Products/ban-phim-t-lamzu-atlantis-pro-keyboard-h-tr-rapid-trigger-39938162786549.webp", productID: "006"},
+    7: {name: "Lót chuột kính cường lực Yuki Aim Kitsune - Limited Edition", price: "3.190.000₫", src: "./src/Products/lot-chu-t-kinh-c-ng-l-c-yuki-aim-kitsune-limited-edition-40729345229045.webp", productID: "007"},
+    8: {name: "Lót chuột kính cường lực Yuki Aim Katana - Limited Edition", price: "3.190.000₫", src: "./src/Products/lot-chu-t-kinh-c-ng-l-c-yuki-aim-katana-limited-edition-40761371001077.webp", productID: "008"}
 }
 
 const BrandsList = {
@@ -51,13 +58,41 @@ const BannersList = {
     5: {src: "./src/Banner/banner5.jpg", about: "Lót chuột siêu chậm, siêu control", name: "Lethal Gaming Gear Jupiter PRO", button: "Xem chi tiết"}
 }
 
-function AddProduct(name,price,src) {
+var CartList = {
+    1: {id:"001", quanity:0},
+    2: {id:"002", quanity:0},
+    3: {id:"003", quanity:0},
+    4: {id:"004", quanity:0},
+    5: {id:"005", quanity:0},
+    6: {id:"006", quanity:0},
+    7: {id:"007", quanity:0},
+    8: {id:"008", quanity:0}
+}
+
+function AddProduct(name,price,src, productid) {
     let ProductSeciton = document.querySelector(".products-section");
-    let Product = `<div class="product-frame">
-        <img src=${src} alt="">
-        <p class="name">${name}</p>
-        <p class="price">${price}</p>
-    </div>`
+    let Product = `<div data-productid="${productid}" class="product-frame">
+                <img src=${src} alt="">
+                <p class="name">${name}</p>
+                <p class="price">${price}</p>
+                <div class="hover-container">
+                    <div class="add-to-cart-frame">
+                        + Thêm nhanh
+                    </div>
+                    <div class="detail-frame">
+                        <form action="product.html" method="GET">
+                            <input type="text" name="id" id="">
+                            <input type="text" name="name" id="">
+                            <input type="text" name="price" id="">
+                            <input type="submit" value="submit">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </form>
+                    </div>
+                    <div class="fav-frame">
+                        <i data-fav="false" class="fa-regular fa-heart"></i>
+                    </div>
+                </div>
+            </div>`
     ProductSeciton.innerHTML += Product;
 }
 
@@ -112,7 +147,7 @@ function PagesSwitcher(Index) {
 
 Object.keys(ProductsList).forEach(key => {
     const value = ProductsList[key];
-    AddProduct(value.name, value.price, value.src);
+    AddProduct(value.name, value.price, value.src, value.productID);
 });
 
 Object.keys(BrandsList).forEach(key => {
@@ -142,39 +177,37 @@ ProgressAutomation = setInterval(() => {
     }
 }, INTERVAL_DURATION/100);
 
-document.querySelector(".desc-section input").addEventListener("mouseover", function() {
-    let RightCursor = document.querySelector("#right");
-    let LeftCursor = document.querySelector("#left");
-    RightCursor.style.zIndex = "0";
-    LeftCursor.style.zIndex = "0";
-});
+function PositionChecker(event) {
+    const posX = event.clientX;
+    const posY = event.clientY;
+    
+    if (posY < document.querySelector("header").getBoundingClientRect().bottom) return false;
+    
+    const input = document.querySelector(".desc-section input");
+    if (input && posX > input.getBoundingClientRect().left && posX < input.getBoundingClientRect().right &&
+        posY > input.getBoundingClientRect().top && posY < input.getBoundingClientRect().bottom) {
+        return false;
+    }
 
-document.querySelector(".desc-section input").addEventListener("mouseout", function() {
-    let RightCursor = document.querySelector("#right");
-    let LeftCursor = document.querySelector("#left");
-    RightCursor.style.zIndex = "2";
-    LeftCursor.style.zIndex = "2";
-});
-document.querySelectorAll(".pages-btn").forEach(Child => {
-    Child.addEventListener("mouseover", function() {
-        let RightCursor = document.querySelector("#right");
-        let LeftCursor = document.querySelector("#left");
-        RightCursor.style.zIndex = "0";
-        LeftCursor.style.zIndex = "0";
+    let isInsidePagesBtn = false;
+    document.querySelectorAll(".pages-btn").forEach(Child => {
+        if (posX > Child.getBoundingClientRect().left && posX < Child.getBoundingClientRect().right &&
+            posY > Child.getBoundingClientRect().top && posY < Child.getBoundingClientRect().bottom) {
+            isInsidePagesBtn = true;
+        }
     });
-})
+
+    if (isInsidePagesBtn) {
+        return false;
+    }
+
+    return true;
+}
+
+
 
 document.querySelectorAll(".pages-btn").forEach(Child => {
-    Child.addEventListener("mouseout", function() {
-        let RightCursor = document.querySelector("#right");
-        let LeftCursor = document.querySelector("#left");
-        RightCursor.style.zIndex = "2";
-        LeftCursor.style.zIndex = "2";
-    });
-})
-
-document.querySelectorAll(".pages-btn").forEach(Child => {
-    Child.addEventListener("click", function() {
+    Child.addEventListener("click", function(event) {
         clearInterval(BannerAutomation);
         clearInterval(ProgressAutomation);
         document.querySelector(".progress-bar").style.transition = "none"
@@ -232,40 +265,63 @@ document.querySelector(".banner-container").addEventListener("mousemove", functi
     let LeftCursor = document.querySelector("#left");
     const posX = event.clientX;
     const posY = event.clientY;
+    RightCursor.style.zIndex = "2";
+    LeftCursor.style.zIndex = "2";
 
     if (posX > (window.innerWidth/2)) {
-        LeftCursor.style.zIndex = "0";
-        RightCursor.style.zIndex = "2";
+        LeftCursor.style.left = -100 + 'px';
+        // RightCursor.style.zIndex = "2";
         RightCursor.style.top = posY + 'px';
         RightCursor.style.left = posX + 'px';
     } else {
-        RightCursor.style.zIndex = "0";
-        LeftCursor.style.zIndex = "2";
+        RightCursor.style.top = -100 + 'px';
+        // LeftCursor.style.zIndex = "2";
         LeftCursor.style.top = posY + 'px';
         LeftCursor.style.left = posX + 'px';
     }
 
     if (posY < (document.querySelector("header").getBoundingClientRect().bottom)) {
-        LeftCursor.style.zIndex = "0";
-        RightCursor.style.zIndex = "0";
-    } else {
-        LeftCursor.style.zIndex = "2";
-        RightCursor.style.zIndex = "2";
+        LeftCursor.style.left = -100 + 'px';
+        RightCursor.style.top = -100 + 'px';
     }
+
+    if (posX > document.querySelector(".desc-section input").getBoundingClientRect().left && posX < document.querySelector(".desc-section input").getBoundingClientRect().right && 
+        posY > document.querySelector(".desc-section input").getBoundingClientRect().top && posY < document.querySelector(".desc-section input").getBoundingClientRect().bottom) {
+        LeftCursor.style.left = -100 + 'px';
+        RightCursor.style.top = -100 + 'px';
+    }
+
+    document.querySelectorAll(".pages-btn").forEach(Child => {
+        if (posX > Child.getBoundingClientRect().left && posX < Child.getBoundingClientRect().right && 
+        posY > Child.getBoundingClientRect().top && posY < Child.getBoundingClientRect().bottom) {
+            LeftCursor.style.left = -100 + 'px';
+            RightCursor.style.top = -100 + 'px';
+        }
+    })
+});
+
+
+window.addEventListener("mousemove", function(event){
+    let RightCursor = document.querySelector("#right");
+    let LeftCursor = document.querySelector("#left");
+    const posX = event.clientX;
+    const posY = event.clientY;
+    LeftCursor.style.top = posY + 'px';
+    RightCursor.style.left = posX + 'px';
 });
 
 document.querySelector(".banner-container").addEventListener("mouseout", function(event) {
     let RightCursor = document.querySelector("#right");
     let LeftCursor = document.querySelector("#left");
-
-    RightCursor.style.top = -100 + 'px';
-    LeftCursor.style.left = -100 + 'px';
+    RightCursor.style.zIndex = "0";
+    LeftCursor.style.zIndex = "0";
 });
 
 document.querySelector(".banner-container").addEventListener("click", function(event) {
     const posX = event.clientX;
-    if (posX > (window.innerWidth/2)) {
+    if (PositionChecker(event) == false) {return};
 
+    if (posX > (window.innerWidth/2)) {
         clearInterval(BannerAutomation);
         clearInterval(ProgressAutomation);
         document.querySelector(".progress-bar").style.transition = "none"
@@ -336,7 +392,141 @@ document.querySelector(".banner-container").addEventListener("click", function(e
             if (progressBar) {
                 progressBar.style.width = CurrentProgress + "%";
             }
-        }, INTERVAL_DURATION/100);    
+        }, INTERVAL_DURATION/100);   
 
     }
+});
+
+var TranslateCheck = false;
+
+document.addEventListener("scroll", (event) => {
+    const BannerIMG = document.querySelector(".background-img");
+    let HeaderSection = document.querySelector('header');
+
+    if (window.scrollY > (BannerIMG.getBoundingClientRect().width / 2)) {
+        HeaderSection.style.position = "fixed";
+        HeaderSection.style.backgroundColor = '#272727';
+
+        if (!TranslateCheck) {
+            TranslateCheck = true;
+            HeaderSection.style.transition = 'none';
+            HeaderSection.style.transform = 'translateY(-10vh)';
+
+            setTimeout(() => {
+                HeaderSection.style.transition = '.125s';
+                HeaderSection.style.transform = 'translateY(0)';
+            }, 0); 
+        }
+    } else {
+        if (TranslateCheck) {
+            TranslateCheck = false;
+            HeaderSection.style.transition = '.125s';
+            HeaderSection.style.transform = 'translateY(-10vh)';
+
+            setTimeout(() => {
+                HeaderSection.style.position = "absolute";
+                HeaderSection.style.backgroundColor = 'transparent';
+                HeaderSection.style.transition = 'none';
+                HeaderSection.style.transform = 'translateY(0)';
+            }, 125); 
+        }
+    }
+});
+
+document.querySelectorAll(".fav-frame i").forEach(Child => {
+    Child.addEventListener("click", function(){
+        if (Child.getAttribute("fav") === "true") {
+            Child.setAttribute("fav", "false");
+            Child.style.transform = 'scale(0)';
+            setTimeout(() => {
+                Child.className = "fa-regular fa-heart";
+                Child.style.transform = 'scale(2)';
+            }, 250);
+            
+        } else {
+            Child.setAttribute("fav", "true");
+            Child.style.transform = 'scale(0)';
+            setTimeout(() => {
+                Child.className = "fa-solid fa-heart";
+                Child.style.transform = 'scale(2)';
+            }, 250);
+        } 
+    });
+})
+
+document.querySelectorAll(".product-frame").forEach(Child => {
+    Child.addEventListener("mousemove", function(event){
+        let Frame = Child.parentNode;
+        let CartBtn = Child.querySelector(".add-to-cart-frame");
+        let DetailBtn = Child.querySelector(".detail-frame");
+        let FavBtn = Child.querySelector(".fav-frame");
+        DetailBtn.style.opacity = "1";
+        DetailBtn.style.transform = "translateY(0)";
+        FavBtn.style.opacity = "1";
+        FavBtn.style.transform = "translateY(0)";
+        CartBtn.style.opacity = "1";
+        CartBtn.style.transform = "translateY(0)";
+    });
+})
+
+document.querySelectorAll(".product-frame").forEach(Child => {
+    Child.addEventListener("mouseout", function(event){
+        let Frame = Child.parentNode;
+        let CartBtn = Child.querySelector(".add-to-cart-frame");
+        let DetailBtn = Child.querySelector(".detail-frame");
+        let FavBtn = Child.querySelector(".fav-frame");
+        DetailBtn.style.opacity = "0";
+        DetailBtn.style.transform = "translateY(-2vh)";
+        FavBtn.style.opacity = "0";
+        FavBtn.style.transform = "translateY(-2vh)";
+        CartBtn.style.opacity = "0";
+        CartBtn.style.transform = "translateY(2vh)";
+    });
+})
+
+var AddToCartCD = false;
+document.querySelectorAll(".add-to-cart-frame").forEach(Child => {
+    Child.addEventListener("click", function(){
+        if (!AddToCartCD) {
+            AddToCartCD = true;
+            const Product = Child.parentNode.parentNode;
+            const ProductID = Product.dataset.productid;
+            const CartQuanity = document.querySelector(".items-quanity");
+            let ProductsCount = 0;
+            Object.keys(CartList).forEach(index => {
+                let product = CartList[index];
+                if (product.id == ProductID) {
+                    product.quanity++;
+                }
+                ProductsCount += product.quanity;
+            });
+            CartQuanity.innerHTML = ProductsCount;
+            Child.style.fontSize = 0;
+            setTimeout(() => {
+                Child.innerHTML = `<i class="fa-solid fa-check"></i>`;
+                Child.style.fontSize = "1rem";
+                setTimeout(() => {
+                    Child.style.fontSize = 0;
+                    setTimeout(() => {
+                        Child.innerHTML = `+ Thêm nhanh`;
+                        Child.style.fontSize = "1rem";
+                        AddToCartCD = false;
+                    }, 250);
+                }, 1000);
+            }, 250);
+        }
+    });
+})
+     
+
+document.querySelectorAll(".detail-frame form i").forEach(Child => {
+    Child.addEventListener("click", (event) => {
+        let Product = Child.parentNode.parentNode.parentNode.parentNode;
+        console.log(Product)
+        let Form = Child.parentNode;
+        Form.querySelector("input[name=id]").value = Product.dataset.productid;
+        Form.querySelector("input[name=name]").value = Product.querySelector(".name").innerText;
+        Form.querySelector("input[name=price]").value = Product.querySelector(".price").innerText;
+        Form.querySelector("input[type=submit]").click();
+    });
 });

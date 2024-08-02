@@ -23,9 +23,9 @@ header {
     width: 100%;
     height: 10vh;
     z-index: 1;
-    /* pointer-events: fill; */
-
+    top: 0;
     cursor: default;
+    transition: 0.125s;
 }
 
 .logo-section {
@@ -79,10 +79,31 @@ header {
 }
 
 .user-section i {
+    /* border: 1px solid; */
+
+    position: relative;
     color: white;
     font-size: 1.25rem;
     margin-right: 5%;
     cursor: pointer;
+}
+
+.user-section i div {
+    border: 1px solid #3C619E;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 75%;
+    height: 75%;
+    margin-top: -37.5%;
+    margin-right: -37.5%;
+    border-radius: 125px;
+    background-color: #3C619E;
+    font-size: .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* BANNER */
@@ -325,7 +346,9 @@ header {
 .product-frame {
     /* border: 1px solid; */
 
+    position: relative;
     width: 23%;
+    cursor: pointer;
 }
 
 .product-frame img {
@@ -343,4 +366,96 @@ header {
     font-weight: 500;
     cursor: pointer;
 }
+
+.hover-container {
+    /* border: 1px solid; */
+
+    position: absolute;
+    width: 100%;
+    height: 75%;
+    top: 0;
+    left: 0;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.add-to-cart-frame {
+    border: 2.5px solid #3C619E;
+    position: absolute;
+    width: 50%;
+    height: 14%;
+    border-radius: 50px;
+    background-color: #3C619E;
+    right: 5%;
+    bottom: -5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    transition: background-color .25s;
+    transition: .25s;
+    opacity: 0;
+    transform: translateY(2vh);
+}
+
+.add-to-cart-frame:hover {
+    background-color: transparent;
+    color: #3C619E;
+}
+
+.fav-frame {
+    /* border: 1px solid; */
+
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0.25%;
+    right: 10%;
+    opacity: 0;
+    transform: translateY(-2vh);
+    transition: .25s;
+}
+
+.fav-frame i{
+    transform: scale(2);
+    cursor: pointer;
+    color: #3C619E;
+    transition: .25s;
+}   
+
+.detail-frame {
+    /* border: 1px solid; */
+
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0.25%;
+    right: -2.5%;
+    opacity: 0;
+    transform: translateY(-2vh);
+    transition: .25s;
+}
+
+.detail-frame form input {
+    border: 1px solid;
+
+    position: absolute;
+    display: none;
+    cursor: default;
+}
+
+.detail-frame i{
+    transform: scale(2);
+    cursor: pointer;
+    color: #3C619E;
+}   
 
