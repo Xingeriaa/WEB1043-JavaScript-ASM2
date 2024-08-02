@@ -142,36 +142,6 @@ ProgressAutomation = setInterval(() => {
     }
 }, INTERVAL_DURATION/100);
 
-document.querySelector("header").addEventListener("mousemove", function() {
-    let RightCursor = document.querySelector("#right");
-    let LeftCursor = document.querySelector("#left");
-    RightCursor.style.zIndex = "0";
-    LeftCursor.style.zIndex = "0";
-});
-
-document.querySelector("header").addEventListener("mouseout", function() {
-    let RightCursor = document.querySelector("#right");
-    let LeftCursor = document.querySelector("#left");
-    RightCursor.style.zIndex = "2";
-    LeftCursor.style.zIndex = "2";
-});
-
-document.querySelector("header").childNodes.forEach(function(Child){
-    Child.addEventListener("mousemove", function() {
-        let RightCursor = document.querySelector("#right");
-        let LeftCursor = document.querySelector("#left");
-        RightCursor.style.zIndex = "0";
-        LeftCursor.style.zIndex = "0";
-    });
-    
-    Child.addEventListener("mouseout", function() {
-        let RightCursor = document.querySelector("#right");
-        let LeftCursor = document.querySelector("#left");
-        RightCursor.style.zIndex = "2";
-        LeftCursor.style.zIndex = "2";
-    });
-});
-
 document.querySelector(".desc-section input").addEventListener("mouseover", function() {
     let RightCursor = document.querySelector("#right");
     let LeftCursor = document.querySelector("#left");
@@ -185,22 +155,6 @@ document.querySelector(".desc-section input").addEventListener("mouseout", funct
     RightCursor.style.zIndex = "2";
     LeftCursor.style.zIndex = "2";
 });
-
-document.querySelector("header").addEventListener("mousemove", function() {
-    let RightCursor = document.querySelector("#right");
-    let LeftCursor = document.querySelector("#left");
-    RightCursor.style.zIndex = "0";
-    LeftCursor.style.zIndex = "0";
-});
-
-document.querySelector("header").addEventListener("mouseout", function() {
-    let RightCursor = document.querySelector("#right");
-    let LeftCursor = document.querySelector("#left");
-    RightCursor.style.zIndex = "2";
-    LeftCursor.style.zIndex = "2";
-});
-
-
 document.querySelectorAll(".pages-btn").forEach(Child => {
     Child.addEventListener("mouseover", function() {
         let RightCursor = document.querySelector("#right");
@@ -280,13 +234,23 @@ document.querySelector(".banner-container").addEventListener("mousemove", functi
     const posY = event.clientY;
 
     if (posX > (window.innerWidth/2)) {
-        LeftCursor.style.top = -100 + 'px';
+        LeftCursor.style.zIndex = "0";
+        RightCursor.style.zIndex = "2";
         RightCursor.style.top = posY + 'px';
         RightCursor.style.left = posX + 'px';
     } else {
-        RightCursor.style.top = -100 + 'px';
+        RightCursor.style.zIndex = "0";
+        LeftCursor.style.zIndex = "2";
         LeftCursor.style.top = posY + 'px';
         LeftCursor.style.left = posX + 'px';
+    }
+
+    if (posY < (document.querySelector("header").getBoundingClientRect().bottom)) {
+        LeftCursor.style.zIndex = "0";
+        RightCursor.style.zIndex = "0";
+    } else {
+        LeftCursor.style.zIndex = "2";
+        RightCursor.style.zIndex = "2";
     }
 });
 
