@@ -80,7 +80,7 @@ function AddProduct(name,price,src, productid) {
                         + Thêm nhanh
                     </div>
                     <div class="detail-frame">
-                        <form action="product.html" method="GET">
+                        <form action="./HTML/product.html" method="GET">
                             <input type="text" name="id" id="">
                             <input type="text" name="name" id="">
                             <input type="text" name="price" id="">
