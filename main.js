@@ -69,7 +69,24 @@ var CartList = {
     8: {id:"008", quanity:0}
 }
 
-function AddProduct(name,price,src, productid) {
+function ConvertToInt(String) {
+    return parseInt(String.replace(/\D/g, ''), 10);
+}
+function NumberFormat(Input) {
+    let Count = 0;
+    let FormatedInput = "";
+    for (let i = Input.length - 1; i >= 0; i--) {
+        if (Count === 3) {
+            FormatedInput = "." + FormatedInput;
+            Count = 0;
+        }
+        FormatedInput = Input[i] + FormatedInput;
+        Count++;
+    }
+    return FormatedInput;
+}
+
+function AddProduct(name,price,src,productid) {
     let ProductSeciton = document.querySelector(".products-section");
     let Product = `<div data-productid="${productid}" class="product-frame">
                 <img src=${src} alt="">
@@ -80,7 +97,7 @@ function AddProduct(name,price,src, productid) {
                         + Thêm nhanh
                     </div>
                     <div class="detail-frame">
-                        <form action="./HTML/product.html" method="GET">
+                        <form action="product.html" method="GET">
                             <input type="text" name="id" id="">
                             <input type="text" name="name" id="">
                             <input type="text" name="price" id="">
@@ -204,7 +221,54 @@ function PositionChecker(event) {
     return true;
 }
 
+function AddCartProduct(src, name, price, quanity, productid) {
+    let CartList = document.querySelector(".products-list"); 
+    let Product = `
+        <div data-productid="${productid}" class="product">
+            <div class="img-frame">
+                <img src="${src}" alt="">
+            </div>
+            <div class="information-section">
+                <div class="title">
+                    ${name}
+                </div>
+                <div class="price">
+                    ${price}
+                </div>
+            </div>
+            <div class="interactive-section">
+                <div class="ammount">
+                    <input type="number" name="" id="" min="1" value="${quanity}">
+                </div>
+                <br>
+                <div class="remove">
+                    Bỏ
+                </div>
+            </div>
+        </div>
+    `
+    CartList.innerHTML += Product;
+}
 
+function CartProductsCheck(id) {
+    const products = document.querySelectorAll(".product");
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].dataset.productid === id) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function ProductFind(id) {
+    const products = document.querySelectorAll(".product");
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].dataset.productid == id) {
+            return products[i];
+        }
+    }
+    return false;
+}
 
 document.querySelectorAll(".pages-btn").forEach(Child => {
     Child.addEventListener("click", function(event) {
@@ -299,7 +363,6 @@ document.querySelector(".banner-container").addEventListener("mousemove", functi
         }
     })
 });
-
 
 window.addEventListener("mousemove", function(event){
     let RightCursor = document.querySelector("#right");
@@ -487,19 +550,50 @@ document.querySelectorAll(".product-frame").forEach(Child => {
 var AddToCartCD = false;
 document.querySelectorAll(".add-to-cart-frame").forEach(Child => {
     Child.addEventListener("click", function(){
-        if (!AddToCartCD) {
+        // if (!AddToCartCD) {
             AddToCartCD = true;
             const Product = Child.parentNode.parentNode;
             const ProductID = Product.dataset.productid;
             const CartQuanity = document.querySelector(".items-quanity");
             let ProductsCount = 0;
+            let PriceTotal = 0;
             Object.keys(CartList).forEach(index => {
                 let product = CartList[index];
+                let ProductInfo = ProductsList[index];
                 if (product.id == ProductID) {
                     product.quanity++;
+                    if (CartProductsCheck(ProductID) == true) {    
+                        AddCartProduct(ProductInfo.src, ProductInfo.name, ProductInfo.price, product.quanity, ProductID)
+                    } else {
+                        ProductFind(ProductID).querySelector(".ammount input").value++;
+                    }
                 }
+                PriceTotal += (ConvertToInt(ProductInfo.price)*product.quanity);
                 ProductsCount += product.quanity;
             });
+            
+            document.querySelectorAll(".interactive-section .remove").forEach(Child => {
+                Child.addEventListener("click", function(event){
+                    let Product = Child.parentNode.parentNode;
+                    let ProductsCount = 0;
+                    let Total = 0
+                    Object.keys(CartList).forEach(key => {
+                        const item = CartList[key];
+                        if (item.id == Product.dataset.productid) {
+                            item.quanity = 0;
+                        }
+                        ProductsCount += item.quanity;
+                        Total += (ConvertToInt(ProductsList[key].price)*item.quanity);
+                    });
+                    document.querySelector(".cart-container .title-section .ammount div").innerText = ProductsCount;
+                    CartQuanity.innerHTML = ProductsCount;
+                    Product.remove();
+                    document.querySelector(".bill-section .total").innerHTML = NumberFormat(Total + "") + " VND";
+                });
+            });            
+
+            document.querySelector(".bill-section .total").innerHTML = NumberFormat(PriceTotal + "") + " VND";
+            document.querySelector(".cart-container .title-section .ammount div").innerText = ProductsCount;
             CartQuanity.innerHTML = ProductsCount;
             Child.style.fontSize = 0;
             setTimeout(() => {
@@ -514,19 +608,70 @@ document.querySelectorAll(".add-to-cart-frame").forEach(Child => {
                     }, 250);
                 }, 1000);
             }, 250);
-        }
+        // }
     });
 })
-     
 
-document.querySelectorAll(".detail-frame form i").forEach(Child => {
-    Child.addEventListener("click", (event) => {
-        let Product = Child.parentNode.parentNode.parentNode.parentNode;
-        console.log(Product)
-        let Form = Child.parentNode;
-        Form.querySelector("input[name=id]").value = Product.dataset.productid;
-        Form.querySelector("input[name=name]").value = Product.querySelector(".name").innerText;
-        Form.querySelector("input[name=price]").value = Product.querySelector(".price").innerText;
-        Form.querySelector("input[type=submit]").click();
+document.querySelector(".remove-all").addEventListener("click", function() {
+    Object.keys(CartList).forEach(key => {
+        const item = CartList[key];
+        item.quanity = 0
     });
+    document.querySelector(".items-quanity").innerHTML = "0";
+    document.querySelector(".cart-container .title-section .ammount div").innerHTML = "0";
+    document.querySelector(".bill-section .total").innerHTML =  "0 VND";
+    document.querySelector(".products-list").innerHTML = "";
+});
+
+document.querySelector(`.total-section form input[type="text"]`).addEventListener("keydown", function(event) {
+    if (isFinite(event.key) && event.key != ' '){event.preventDefault()} 
+});
+
+
+let SelectInput = document.querySelector(`.total-section form select`);
+document.querySelector(".pay-btn").addEventListener("click", function() {
+    if (document.querySelector(".bill-section .total").innerText == "0 VND") {
+        alert("Giỏ hàng của bạn đang trống!")
+        return;
+    }
+
+    if (document.querySelector(`.total-section form input[type="text"]`).value == '' || document.querySelector(`.total-section form input[type="text"]`).value == ' ') {
+        alert("Vui lòng nhập lại Họ và tên!");
+        return;
+    } else if (document.querySelector(`.total-section form input[type="number"]`).value < 1000000000) {
+        alert("Vui lòng nhập lại Số điện thoại!");
+        return;
+    } else if (SelectInput.options[SelectInput.selectedIndex].text == "Tỉnh thành") {
+        alert("Vui lòng chọn Tỉnh thành!");
+        return;
+    } else if (!document.querySelector(`.total-section form div input[value="creditcard"]`).checked && !document.querySelector(`.total-section form div input[value="onlinebanking"]`).checked && !document.querySelector(`.total-section form div input[value="cash"]`).checked) {
+        alert("Vui lòng chọn Phương thức thanh toán!");
+        return;
+    }
+    alert("Thanh toán thành công!");
+});
+
+document.querySelector(".cart-container .exit").addEventListener("click", function(event) {
+    let Cart = document.querySelector(".cart-container");
+    Cart.style.transform = "translateX(200%)";
+    setTimeout(() => {
+        document.querySelector(".focus-background").style.display = "none"; 
+        document.querySelector("body").style.overflow = "auto";
+    }, 250); 
+});
+
+
+document.querySelector(`.user-section i[class="fa-solid fa-cart-shopping"]`).addEventListener("click",function(event) {
+    let Cart = document.querySelector(".cart-container");
+    Cart.style.transform = "translateX(0)";
+    document.querySelector(".focus-background").style.display = "flex"; 
+    document.querySelector("body").style.overflow = "hidden";
+});
+
+document.querySelector(`.bill-section .pay-btn`).addEventListener("mousemove",function(){
+    document.querySelector(`.bill-section .pay-btn`).style = `background-color: white; color: #3C619E`;
+});
+
+document.querySelector(`.bill-section .pay-btn`).addEventListener("mouseout",function(){
+    document.querySelector(`.bill-section .pay-btn`).style = `background-color: #3C619E; color: white`;
 });

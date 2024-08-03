@@ -15,7 +15,9 @@
 <img src="./src/Banner/banner5.jpg" style="display:none;" alt="" />
 
 <script src="https://kit.fontawesome.com/3b3711deef.js" crossorigin="anonymous"></script>
+
 <header>
+    
     <div class="logo-section">
         <a href="#"><img src="./src/Logo_PCX-line-white.webp" alt=""></a>
     </div>
@@ -30,10 +32,11 @@
     <div class="user-section">
         <i class="fa-solid fa-magnifying-glass"></i>
         <i class="fa-regular fa-user"></i>
-        <a href="./HTML/cart.html"><i class="fa-solid fa-cart-shopping"><div class="items-quanity">0</div></i></a>
+        <i class="fa-solid fa-cart-shopping"><div class="items-quanity">0</div></i>
     </div>
 </header>
 <body>
+    <div class="focus-background"></div>
     <div class="banner-container">
         <i id="right" class="fa-solid fa-circle-chevron-right"></i>
         <i id="left" class="fa-solid fa-circle-chevron-left"></i>
@@ -83,6 +86,65 @@
         <h1>Sản phẩm mới và sắp về</h1>
         <p>Luôn cập nhật những sản phẩm mới và HOT nhất tại Phong Cách Xanh</p>
         <div class="products-section">
+        </div>
+    </div>
+    <div tabindex="0" class="cart-container">
+
+        <div class="title-section">
+            <div class="title">
+                Giỏ hàng
+            </div>
+            <div class="ammount">
+                <div>0</div>
+            </div>
+            <div class="exit">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="remove-all">
+                Bỏ tất cả
+            </div>
+            <br>
+            <hr>
+        </div>
+        
+        <div class="products-list">
+        </div>
+
+        <div class="total-section">
+            <form>
+                <font>Thanh toán</font> <br> 
+                <input type="text" name="fullname" placeholder="Họ và tên" id=""> <br> 
+                <input type="number" name="contact" placeholder="Số điện thoại" id="" min="1000000"> <br>
+                <select name="city" id="">
+                    <option value="" disabled selected>Tỉnh thành</option>
+                    <option value="An Giang">An Giang</option>
+                    <option value="Dong Nai">Đồng Nai</option>
+                    <option value="Ha Noi">Hà Nội</option>
+                    <option value="Bac Gian">Bắc Giang</option>
+                    <option value="Thanh pho Ho Chi Minh">Thành phố Hồ Chí minh</option>
+                </select>
+                <br>
+                <label style="text-decoration: underline;" >Phương thức thanh toán</label>
+                <div>
+                    <input type="radio" name="payment" id="" value="onlinebanking">
+                    <label for="">Chuyển khoản</label><br>
+                    <input type="radio" name="payment" id="" value="creditcard">
+                    <label for="">ATM</label>
+                    <input type="radio" name="payment" id="" value="cash">
+                    <label for="">Khi nhận hàng</label>
+                </div>
+                <input type="button" value="Thanh toán">
+            </form>
+            <div class="bill-section">
+                <label name="NIGGER">Tổng</label>
+                <div class="total">
+                    0 VND
+                </div>
+                <label name="note">Đã bao gồm thuế; <font style="text-decoration: underline;">Phí ship</font> sẽ được tính khi thanh toán</label>
+                <div class="pay-btn">
+                    <i class="fa-solid fa-lock"></i><label for="">Thanh toán</label>
+                </div>
+            </div>
         </div>
     </div>
     <script type="module" src="main.js"></script>

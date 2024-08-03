@@ -12,6 +12,11 @@ body {
     height: 100%;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 /* HEADER */
 
@@ -459,3 +464,329 @@ header {
     color: #3C619E;
 }   
 
+/* CART */
+.cart-container{
+    /* border: 1px solid; */
+
+    position: fixed;
+    border-radius: 1.125rem;
+    height: 97%;
+    width: 35%;
+    right: 1.5vh;
+    top: 1.5%;
+    background-color: white;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transform: translateX(200%);
+    transition: .5s;
+}
+
+.focus-background {
+    border: 1px solid black;
+
+    position: fixed;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: .5;
+    z-index: 3;
+    transition: .5;
+}
+
+.title-section {
+    /* border: 1px solid; */
+
+    position: relative;
+    width: 90%;
+    height: 10%;
+    margin-top: 5%;
+}
+
+.title-section .title {
+    /* border: 1px solid; */
+
+    width: 15%;
+    font-size: 1.3rem;
+    font-weight: 375;
+}
+
+.title-section .ammount{
+ 
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    top: .7rem;
+    left: 15%;
+}
+
+.cart-container hr {
+    height: .25rem;
+    background-color: #3C619E;
+    border-radius: 1rem;
+    border: none;
+}
+
+.title-section .ammount div{
+    border: 1px solid #3C619E;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: -37.5%;
+    margin-right: -37.5%;
+    border-radius: 125px;
+    background-color: #3C619E;
+    color: white;
+    font-size: .95rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+}
+
+.title-section .exit {
+    /* border: 1px solid; */
+
+    position: absolute;
+    width: 2vh;
+    height: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+}
+
+.title-section .exit i {
+    transform: scale(1.125);
+    cursor: pointer;
+}
+
+.remove-all {
+    position: absolute;
+
+    right: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* CART PRODUCTS */
+
+
+.products-list {
+    /* border: 1px solid; */
+
+    position: relative;
+    width: 90%;
+    height: 60%;
+    overflow-y: auto;
+}
+
+.product {
+    /* border: 1px solid; */
+
+    width: 100%;
+    height: 20%;
+    display: flex;
+}
+
+.product .img-frame {
+    /* border: 1px solid; */
+
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.product .img-frame img {
+    width: 100%;
+    transform: scale(.75);
+}
+
+.information-section {
+    /* border: 1px solid; */
+
+    width: 65%;
+    height: 100%;
+}
+
+.information-section .title {
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.75rem;
+}
+
+.information-section .price {
+    color: rgb(70, 70, 70);
+    font-weight: 300;
+    margin-top: 1%;
+}
+
+.interactive-section {
+    /* border: 1px solid; */
+
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.interactive-section .ammount{
+    width: 2.1rem;
+    height: 1.75rem;
+}
+
+.interactive-section .ammount input{
+    width: 100%;
+    height: 100%;
+    border-radius: .5rem;
+    border: 1px solid rgb(194, 194, 194);
+    text-align: center;
+    outline: none;
+    color: gray;
+    font-size: .85rem;
+}
+
+.interactive-section .remove {
+    text-decoration: underline;
+    color: black;
+    font-size: .85rem;
+    cursor: pointer;
+}
+
+
+.cart-container .total-section {
+    border-top: 1px solid rgb(180, 180, 180);
+    position: absolute;
+    bottom: 0;
+    height: 25%;
+    width: 100%;
+    opacity: 1;
+}
+
+/* FORM */
+
+.cart-container .total-section form {
+    /* border: 1px solid black; */
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    bottom: 0;
+    left: 5%;
+}
+
+.total-section form font{
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.total-section form input[type="text"]{
+    height: 10%;
+    width: 60%;
+    outline: none;
+    margin-top: 5px;
+}
+
+
+.total-section form input[type="number"]{
+    height: 10%;
+    width: 60%;
+    outline: none;
+    margin-top: 5px;
+    transition: .25s linear;
+}
+
+.total-section form select {
+    height: 10%;
+    width: 60%;
+    margin-top: 5px;
+}
+
+.total-section form div {
+    /* border: 1px solid; */
+    
+    margin-top: 2.5%;
+    width: 60%;
+    height: 20%;
+    left: 0;
+}
+
+.total-section form div input {
+    margin-left: 0;
+}
+
+.total-section form input[type="button"] {
+    display: none;
+}
+
+/* PAYMENT */
+
+.bill-section {
+    /* border: 1px solid; */
+
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    right: 0;
+}
+
+.bill-section .pay-btn * {
+    cursor: pointer;
+}
+
+.bill-section .pay-btn {
+    border: 3px solid #3C619E;
+    position: absolute;
+    width: 90%;
+    height: 30%;
+    border-radius: 3rem;
+    bottom: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    font-size: 1.125rem;
+    color: white;
+    background-color: #3C619E;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.bill-section .pay-btn label {
+    margin-left: 1rem;
+}
+
+.bill-section label[name="NIGGER"]{
+    position: absolute;
+    font-size: 1.1rem;
+    top: .75rem;
+    right: 10%;
+}
+
+.bill-section .total {
+
+    position: absolute;
+    right: 10%;
+    top: 2.5rem;
+    font-size: 1.25rem;
+}
+
+.bill-section label[name="note"]{
+    position: absolute;
+    font-size: .75rem;
+    top: 5rem;
+    right: 10%;
+}
